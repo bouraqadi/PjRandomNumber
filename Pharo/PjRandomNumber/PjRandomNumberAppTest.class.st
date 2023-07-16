@@ -1,8 +1,6 @@
 Class {
 	#name : #PjRandomNumberAppTest,
 	#superclass : #PjWebAppTestCase,
-	#traits : 'PjTAppRunsInJS',
-	#classTraits : 'PjTAppRunsInJS classTrait',
 	#category : #PjRandomNumber
 }
 
@@ -12,24 +10,36 @@ PjRandomNumberAppTest class >> appClass [
 ]
 
 { #category : #tests }
-PjRandomNumberAppTest >> testMaxNumberSet [
+PjRandomNumberAppTest >> testInitialState [
 
 	self assert: app maxNumber equals: 6.
-	#( 1 150 10000 ) do: [ :each | 
+	self assertValueOfElement: app maxNumberInput equals: 6 asString.
+	self assert: app randomNumberText textContent asNumber >= 0
+]
+
+{ #category : #tests }
+PjRandomNumberAppTest >> testMaxNumberChange [
+
+	| generatedNumbers |
+	generatedNumbers := Set new.
+	3 timesRepeat: [#( 1 150 10000 ) do: [ :each | 
 		self changeElement: app maxNumberInput value: each.
 		self assert: app maxNumber equals: each.
-		self assert: app messageView textContent isEmpty ].
-
+		generatedNumbers add: app randomNumberText textContent ]].
+	self assert: generatedNumbers size > 1
 ]
 
 { #category : #tests }
 PjRandomNumberAppTest >> testRandomNumberGeneration [
 
-	self deny: app randomNumber isNil.
-	self changeElement: app maxNumberInput value: 2.
-	(0 to: 2) do: [ :each | 
-		self waitUntil: [ 
-			self clickElement:
-				app generateNumberButton app random number = each ] ].
-	
+	| generatedNumber |
+	#( 2 4 ) do: [ :maxValue | 
+		self changeElement: app maxNumberInput value: maxValue.
+		(0 to: maxValue) do: [ :each | 
+			self waitUntil: [ 
+				self clickElement: app generateNumberButton.
+				generatedNumber := app randomNumberText textContent asNumber.
+				self deny: generatedNumber > maxValue.
+				self deny: generatedNumber < 0.
+				generatedNumber = each ] ] ]
 ]
