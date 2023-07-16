@@ -1,4 +1,4 @@
-name: CI
+name: Continuous Integration (CI)
 
 # Controls when the workflow will run
 on:
@@ -20,7 +20,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
         with:
