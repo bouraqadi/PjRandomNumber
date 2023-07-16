@@ -1,7 +1,7 @@
 SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
-      #baseline : 'PjRandomNumber ',
+      #baseline : 'PjRandomNumber',
       #directory : 'Pharo',  
       #platforms : [ #pharo ]
     }
