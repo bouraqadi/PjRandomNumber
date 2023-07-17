@@ -59,4 +59,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-          target: HTML/PjRandomNumber/PjRandomNumberApp/*
+          target: ~/HTML/PjRandomNumber/PjRandomNumberApp/*
