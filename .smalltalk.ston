@@ -13,7 +13,7 @@ SmalltalkCISpec {
     'scripts/exportApp.st'
   ],
   #testing : {
-    #packages : [ 'PjRandomNumber']
+    #packages : [ 'PjRandomNumber'],
     #failOnZeroTests : false
   }
 }
