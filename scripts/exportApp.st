@@ -1,2 +1,2 @@
-PjRandomNumberApp appFolder: './HTML/PjRandomNumber/PjRandomNumberApp' asFileLocatorOrReference ensureCreateDirectory.
+PjRandomNumberApp appFolder: './build' asFileLocatorOrReference ensureCreateDirectory.
 PjRandomNumberApp exportApp
