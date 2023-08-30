@@ -1,24 +1,25 @@
-name: Deploy a PharoJS App as a GitHub Page
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: PharoJS for GitHub Pages
+run-name: Deploy a PharoJS App as a GitHub Page 🚀
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: browser-actions/setup-chrome@v1
-      - run: echo "💡 Chrome has been installed."
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+      - run: chrome --version
       - name: Check out repository code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Depth 0 = clone the repo and all its history as required by Iceberg
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - uses: hpi-swa/setup-smalltalkCI@v1
+      - name: Install SmalltalkCI
+        uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
         with:
           smalltalk-image: 'Pharo64-11'
           cache: 'smalltalk-image'
-      - run: echo "💡 SmalltalkCI has been installed."
-      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
+      - name: Running SmalltalkCI
+        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
         shell: bash
         timeout-minutes: 15
     
