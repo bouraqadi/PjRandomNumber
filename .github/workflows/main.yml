@@ -31,16 +31,17 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
         with:
           smalltalk-image: 'Pharo64-11'
       - uses: browser-actions/setup-chrome@v1
-      - run: mkdir ./build
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
         shell: bash
         timeout-minutes: 15
-        #Archive artifact
+      #Archive artifact
       - run: |
           tar \
             --dereference --hard-dereference \
