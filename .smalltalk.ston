@@ -6,11 +6,11 @@ SmalltalkCISpec {
       #platforms : [ #pharo ]
     }
   ],
-  #preTesting : [
-    'scripts/setup.st'
-  ],
   #postLoading : [
     'scripts/exportApp.st'
+  ],
+  #preTesting : [
+    'scripts/setup.st'
   ],
   #testing : {
     #packages : [ 'PjRandomNumber'],
