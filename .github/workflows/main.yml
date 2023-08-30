@@ -11,12 +11,12 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Depth 0 allows = clone the repo and all its history
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -32,4 +32,14 @@ jobs:
         shell: bash
         timeout-minutes: 15
 
+      #Archive artifact
+      - run: tar \
+          --dereference --hard-dereference \
+          --directory "$INPUT_PATH" \
+          -cvf "$RUNNER_TEMP/artifact.tar" \
+          --exclude=.git \
+          --exclude=.github \
+          .
+        env:
+          INPUT_PATH: "./HTML/PjRandomNumber/PjRandomNumberApp"
 
