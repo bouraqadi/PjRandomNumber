@@ -1,5 +1,4 @@
 |newRepository|
-FileLocator workingDirectory fullName traceCr.
 Smalltalk vm maxExternalSemaphoresSilently: 1000.
 newRepository := IceRepositoryCreator new
 				repository: nil;
