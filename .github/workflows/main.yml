@@ -1,45 +1,25 @@
 name: Deploy a PharoJS App as a GitHub Page
-
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
-  push:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
 jobs:
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Depth 0 allows = clone the repo and all its history
-      - uses: actions/checkout@v3
+      - uses: browser-actions/setup-chrome@v1
+      - run: echo "💡 Chrome has been installed."
+      - name: Check out repository code
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Depth 0 = clone the repo and all its history as required by Iceberg
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
         with:
           smalltalk-image: 'Pharo64-11'
           cache: 'smalltalk-image'
-      - uses: browser-actions/setup-chrome@v1
-        with:
-          cache: 'chrome-version'
+      - run: echo "💡 SmalltalkCI has been installed."
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
         shell: bash
         timeout-minutes: 15
-
-      #Archive artifact
-      - run: tar \
-          --dereference --hard-dereference \
-          --directory "$INPUT_PATH" \
-          -cvf "$RUNNER_TEMP/artifact.tar" \
-          --exclude=.git \
-          --exclude=.github \
-          .
-        env:
-          INPUT_PATH: "./HTML/PjRandomNumber/PjRandomNumberApp"
+    
 
