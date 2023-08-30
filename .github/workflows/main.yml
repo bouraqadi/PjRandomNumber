@@ -16,13 +16,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Depth 0 = clone the repo and all its history as required by Iceberg
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
-
-      - name: run tests
+      - name: run ${{ github.repository }} tests
         uses: Wandalen/wretry.action@master
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
